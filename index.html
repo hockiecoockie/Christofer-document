@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>CHRISTOFER — CONFIDENTIAL FILE</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            background: #080808;
+            color: #c8c8c8;
+            font-family: "Courier New", monospace;
+            overflow-x: hidden;
+        }
+
+        /* OLD CRT EFFECT */
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 999;
+            background:
+                repeating-linear-gradient(
+                    to bottom,
+                    rgba(255,255,255,0.025) 0px,
+                    rgba(255,255,255,0.025) 1px,
+                    transparent 2px,
+                    transparent 4px
+                );
+        }
+
+        body::after {
+            content: "";
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 998;
+            background: radial-gradient(
+                ellipse at center,
+                transparent 45%,
+                rgba(0,0,0,0.75) 100%
+            );
+        }
+
+        .terminal {
+            width: min(1000px, 92%);
+            margin: 40px auto;
+            border: 1px solid #555;
+            background: #101010;
+            box-shadow: 0 0 30px rgba(255,255,255,0.04);
+        }
+
+        .top-bar {
+            background: #d0d0d0;
+            color: #111;
+            padding: 8px 15px;
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+            font-size: 13px;
+        }
+
+        .warning {
+            text-align: center;
+            padding: 18px;
+            border-bottom: 1px solid #444;
+            color: #ddd;
+            letter-spacing: 3px;
+            font-weight: bold;
+        }
+
+        .red {
+            color: #b30000;
+        }
+
+        .content {
+            padding: 30px;
+        }
+
+        .header {
+            display: flex;
+            gap: 30px;
+            align-items: flex-start;
+            border-bottom: 1px solid #444;
+            padding-bottom: 25px;
+        }
+
+        .photo {
+            width: 190px;
+            height: 230px;
+            border: 1px solid #555;
+            background:
+                linear-gradient(
+                    135deg,
+                    #171717,
+                    #303030,
+                    #111
+                );
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+            text-align: center;
+            font-size: 12px;
+        }
+
+        .identity {
+            flex: 1;
+        }
+
+        h1 {
+            margin-top: 0;
+            font-size: 34px;
+            letter-spacing: 5px;
+            color: #eee;
+        }
+
+        .subtitle {
+            color: #777;
+            margin-bottom: 25px;
+        }
+
+        .status {
+            display: inline-block;
+            border: 1px solid #777;
+            padding: 8px 15px;
+            color: #ddd;
+        }
+
+        .section {
+            margin-top: 35px;
+            border: 1px solid #444;
+        }
+
+        .section-title {
+            background: #1d1d1d;
+            border-bottom: 1px solid #444;
+            padding: 10px 15px;
+            color: #eee;
+            letter-spacing: 2px;
+        }
+
+        .section-content {
+            padding: 20px;
+        }
+
+        .row {
+            display: grid;
+            grid-template-columns: 220px 1fr;
+            border-bottom: 1px dashed #333;
+            padding: 10px 0;
+        }
+
+        .row:last-child {
+            border-bottom: none;
+        }
+
+        .label {
+            color: #777;
+        }
+
+        .redacted {
+            background: #ddd;
+            color: #ddd;
+            padding: 0 5px;
+        }
+
+        .note {
+            color: #999;
+            line-height: 1.7;
+        }
+
+        .log {
+            margin: 12px 0;
+            padding: 15px;
+            border-left: 3px solid #555;
+            background: #0b0b0b;
+        }
+
+        .log-date {
+            color: #666;
+            font-size: 12px;
+        }
+
+        .glitch {
+            animation: glitch 4s infinite;
+        }
+
+        @keyframes glitch {
+            0%, 95%, 100% {
+                opacity: 1;
+                transform: translateX(0);
+            }
+
+            96% {
+                opacity: 0.7;
+                transform: translateX(-2px);
+            }
+
+            97% {
+                opacity: 0.9;
+                transform: translateX(3px);
+            }
+
+            98% {
+                opacity: 0.5;
+                transform: translateX(-1px);
+            }
+        }
+
+        .hidden-message {
+            color: #101010;
+            user-select: text;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 30px;
+            color: #555;
+            font-size: 11px;
+            line-height: 1.8;
+        }
+
+        .access {
+            color: #777;
+            text-align: center;
+            margin-top: 15px;
+        }
+
+        @media (max-width: 650px) {
+            .header {
+                flex-direction: column;
+            }
+
+            .row {
+                grid-template-columns: 1fr;
+                gap: 5px;
+            }
+
+            .photo {
+                width: 100%;
+            }
+
+            h1 {
+                font-size: 25px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="terminal">
+
+    <div class="top-bar">
+        <span>ARCHIVE TERMINAL // 07</span>
+        <span>ACCESS LEVEL: ███</span>
+    </div>
+
+    <div class="warning">
+        CLASSIFIED PERSONNEL RECORD
+        <br>
+        <span class="red">UNAUTHORIZED ACCESS IS PROHIBITED</span>
+    </div>
+
+    <div class="content">
+
+        <!-- IDENTITY -->
+
+        <div class="header">
+
+            <div class="photo">
+                [ PHOTOGRAPH REMOVED ]
+                <br><br>
+                IMAGE ID: C-0721
+            </div>
+
+            <div class="identity">
+
+                <h1 class="glitch">CHRISTOFER</h1>
+
+                <div class="subtitle">
+                    PERSONNEL / TEST SUBJECT RECORD
+                </div>
+
+                <div class="status">
+                    STATUS: <span class="red">DECEASED</span>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- PERSONAL INFORMATION -->
+
+        <div class="section">
+
+            <div class="section-title">
+                PERSONAL INFORMATION
+            </div>
+
+            <div class="section-content">
+
+                <div class="row">
+                    <div class="label">FULL NAME</div>
+                    <div>Christofer [REDACTED]</div>
+                </div>
+
+                <div class="row">
+                    <div class="label">IDENTIFICATION</div>
+                    <div>C-0721</div>
+                </div>
+
+                <div class="row">
+                    <div class="label">DATE OF BIRTH</div>
+                    <div>██ / ██ / 19██</div>
+                </div>
+
+                <div class="row">
+                    <div class="label">DATE OF DEATH</div>
+                    <div>07 / 21 / 1998</div>
+                </div>
+
+                <div class="row">
+                    <div class="label">PLACE OF DEATH</div>
+                    <div><span class="redacted">RESTRICTED</span></div>
+                </div>
+
+                <div class="row">
+                    <div class="label">CAUSE</div>
+                    <div><span class="redacted">RESTRICTED</span></div>
+                </div>
+
+            </div>
+        </div>
+
+
+        <!-- EXPERIMENT INFORMATION -->
+
+        <div class="section">
+
+            <div class="section-title">
+                EXPERIMENTAL RECORD
+            </div>
+
+            <div class="section-content">
+
+                <div class="row">
+                    <div class="label">SUBJECT</div>
+                    <div>C-0721</div>
+                </div>
+
+                <div class="row">
+                    <div class="label">PROJECT</div>
+                    <div>PROJECT █████</div>
+                </div>
+
+                <div class="row">
+                    <div class="label">NUMBER OF TESTS</div>
+                    <div>████</div>
+                </div>
+
+                <div class="row">
+                    <div class="label">FINAL TEST</div>
+                    <div>07 / 20 / 1998</div>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- OBSERVATIONS -->
+
+        <div class="section">
+
+            <div class="section-title">
+                OBSERVATION NOTES
+            </div>
+
+            <div class="section-content">
+
+                <p class="note">
+                    Subject displayed increasing resistance to the experimental
+                    procedures.
+                </p>
+
+                <p class="note">
+                    Subject repeatedly reported that someone was watching him.
+                </p>
+
+                <p class="note">
+                    Security personnel were instructed to ignore these claims.
+                </p>
+
+                <p class="note">
+                    During the final observation, subject's physical condition
+                    was reported as unstable.
+                </p>
+
+                <p class="note">
+                    Further documentation has been classified.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- TIMELINE -->
+
+        <div class="section">
+
+            <div class="section-title">
+                INCIDENT LOG
+            </div>
+
+            <div class="section-content">
+
+                <div class="log">
+                    <div class="log-date">07 / 18 / 1998</div>
+                    Subject requested termination of testing.
+                    Request denied.
+                </div>
+
+                <div class="log">
+                    <div class="log-date">07 / 19 / 1998</div>
+                    Subject reported seeing an unidentified figure
+                    inside the generator room.
+                </div>
+
+                <div class="log">
+                    <div class="log-date">07 / 20 / 1998</div>
+                    Final test initiated.
+                </div>
+
+                <div class="log">
+                    <div class="log-date">07 / 21 / 1998</div>
+                    Subject declared dead.
+                </div>
+
+                <div class="log">
+                    <div class="log-date">07 / 21 / 1998 — 23:47</div>
+                    Body transferred to █████████.
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- FINAL MESSAGE -->
+
+        <div class="section">
+
+            <div class="section-title">
+                FINAL ADMINISTRATIVE NOTE
+            </div>
+
+            <div class="section-content">
+
+                <p class="note">
+                    In memory of our dear Christofer, who was found dead
+                    today, 07/21/1998.
+                </p>
+
+                <p class="note">
+                    He will always remain in our hearts.
+                </p>
+
+                <p class="note">
+                    Never forgotten.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- STRANGE PART -->
+
+        <div class="section">
+
+            <div class="section-title">
+                SYSTEM NOTICE
+            </div>
+
+            <div class="section-content">
+
+                <p>
+                    RECORD STATUS:
+                    <span class="red">ARCHIVED</span>
+                </p>
+
+                <p>
+                    DATABASE STATUS:
+                    <span class="red">NORMAL</span>
+                </p>
+
+                <p>
+                    SUBJECT STATUS:
+                    <span class="red">DECEASED</span>
+                </p>
+
+                <p class="glitch">
+                    LAST DATABASE UPDATE:
+                    07/22/1998
+                </p>
+
+                <br>
+
+                <p>
+                    ERROR: SUBJECT IDENTIFICATION MISMATCH.
+                </p>
+
+                <p>
+                    SEARCHING DATABASE...
+                </p>
+
+                <p>
+                    MATCH FOUND.
+                </p>
+
+                <p>
+                    NAME: <strong>CHRISTOPHER</strong>
+                </p>
+
+                <p>
+                    STATUS:
+                    <span class="red">ALIVE</span>
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- HIDDEN TEXT -->
+
+        <p class="hidden-message">
+            HE IS NOT CHRISTOFER.
+        </p>
+
+
+        <div class="footer">
+
+            ARCHIVE TERMINAL 07<br>
+            ALL RECORDS PROPERTY OF █████████████<br>
+            COPYRIGHT © 1998<br><br>
+
+            IF YOU ARE READING THIS FILE,
+            YOU WERE NOT SUPPOSED TO FIND IT.
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+  </html>
